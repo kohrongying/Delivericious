@@ -1,5 +1,6 @@
 package foodordering;
 
+import foodordering.food.SeaFoodSalad;
 import foodordering.food.TomatoSoup;
 import org.junit.jupiter.api.Test;
 
@@ -21,5 +22,21 @@ public class AddFoodItemToBasketTest {
         List<Food> actualItems = basket.getAllFood();
         assertEquals(actualItems.size(), 1);
         assertEquals(actualItems.get(0), tomatoSoup);
+    }
+
+    @Test
+    void testAddSeaFoodSaladToBasket() {
+        // given
+        Basket basket = new Basket();
+        Food seaFoodSalad = new SeaFoodSalad();
+
+        // when
+        basket.addFood(seaFoodSalad);
+
+        // then
+        List<Food> actualItems = basket.getAllFood();
+        assertEquals(actualItems.size(), 1);
+        assertEquals(actualItems.get(0), seaFoodSalad);
+        assertEquals(seaFoodSalad.getPrice(), basket.getTotalPrice());
     }
 }
