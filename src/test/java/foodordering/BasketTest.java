@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AddFoodItemToBasketTest {
+public class BasketTest {
     @Test
     void testAddTomatoSoupToBasket() {
         // given
@@ -41,7 +41,7 @@ public class AddFoodItemToBasketTest {
         List<BasketItem> actualItems = basket.getBasketItemList();
         assertEquals(actualItems.size(), 1);
         assertEquals(actualItems.get(0), basketItem);
-        assertEquals(seaFoodSalad.getPrice(), basket.getTotalPrice());
+        assertEquals(new Money("12.00", Currency.SGD), basket.getTotalPrice());
     }
 
     @Test
@@ -55,8 +55,8 @@ public class AddFoodItemToBasketTest {
 
         // then
         List<BasketItem> actualItems = basket.getBasketItemList();
-        assertEquals(actualItems.size(), 1);
-        assertEquals(iceCream.getPrice(), new BigDecimal("4.00"));
-        assertEquals(basket.getTotalPrice(), new BigDecimal("12.00"));
+        assertEquals(1, actualItems.size());
+        assertEquals(new Money("4.00", Currency.SGD), iceCream.getPrice());
+        assertEquals(new Money("12.00", Currency.SGD), basket.getTotalPrice());
     }
 }

@@ -16,7 +16,7 @@ public class BasketItem {
         this.quantity = 1;
     }
 
-    public BigDecimal getPrice() {
+    public Money getPrice() {
         return this.food.getPrice().multiply(new BigDecimal(this.quantity));
     }
 }

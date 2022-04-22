@@ -16,10 +16,10 @@ public class Basket {
         return this.basketItemList;
     }
 
-    public BigDecimal getTotalPrice() {
+    public Money getTotalPrice() {
         return basketItemList.stream()
             .map(BasketItem::getPrice)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+            .reduce(Money.ZERO, Money::add);
     }
 }
 

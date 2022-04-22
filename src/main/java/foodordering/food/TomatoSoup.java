@@ -1,15 +1,15 @@
 package foodordering.food;
 
+import foodordering.Currency;
 import foodordering.Food;
-
-import java.math.BigDecimal;
+import foodordering.Money;
 
 public class TomatoSoup extends Food {
 
-    public static final String TOMATO_SOUP = "Tomato Soup";
-    public static final BigDecimal TOMATO_SOUP_PRICE = new BigDecimal("24.45");
+    public static final String NAME = "Tomato Soup";
+    public static final Money PRICE = new Money("24.45", Currency.SGD);
 
     public TomatoSoup() {
-        super(TOMATO_SOUP, TOMATO_SOUP_PRICE);
+        super(NAME, PRICE);
     }
 }
