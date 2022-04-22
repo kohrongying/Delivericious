@@ -3,9 +3,15 @@ package foodordering;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Basket {
+    public final UUID id;
+
+    public Basket() {
+        this.id = UUID.randomUUID();
+    }
 
     private final List<BasketItem> basketItemList = new ArrayList<>();
 
@@ -47,6 +53,15 @@ public class Basket {
 
     private void removeBasketItem(BasketItem basketItem) {
         this.basketItemList.remove(basketItem);
+    }
+
+    public Basket duplicate() {
+        Basket newBasket = new Basket();
+        for (int i = 0; i < this.basketItemList.size(); i++) {
+            BasketItem basketItem = this.basketItemList.get(i);
+            newBasket.addBasketItem(basketItem.clone());
+        }
+        return newBasket;
     }
 }
 

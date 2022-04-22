@@ -27,4 +27,8 @@ public class BasketItem {
     public Food getFood() {
         return food;
     }
+
+    public BasketItem clone() {
+        return new BasketItem(this.food, this.quantity);
+    }
 }
