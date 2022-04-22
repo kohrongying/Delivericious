@@ -90,4 +90,16 @@ public class BasketTest {
         assertNotEquals(basket.id, newBasket.id);
         assertEquals(new Money("12.00", Currency.SGD), newBasket.getTotalPrice());
     }
+
+    @Test
+    void testBasketGetTotalPrice() {
+        Basket basket = new Basket();
+        Food iceCream = new ChocolateIceCream();
+        SeaFoodSalad seaFoodSalad = new SeaFoodSalad();
+
+        basket.addBasketItem(new BasketItem(iceCream, 3));
+        basket.addBasketItem(new BasketItem(seaFoodSalad));
+
+        assertEquals(new Money("24.00", Currency.SGD), basket.getTotalPrice());
+    }
 }
