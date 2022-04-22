@@ -55,8 +55,26 @@ public class BasketTest {
 
         // then
         List<BasketItem> actualItems = basket.getBasketItemList();
+        Integer totalFoodQuantity = basket.totalFoodQuantity();
         assertEquals(1, actualItems.size());
+        assertEquals(3, totalFoodQuantity);
         assertEquals(new Money("4.00", Currency.SGD), iceCream.getPrice());
         assertEquals(new Money("12.00", Currency.SGD), basket.getTotalPrice());
+    }
+
+    @Test
+    void testRemoveChocolateIceCreamAfterAdd3ToBasket() {
+        Basket basket = new Basket();
+        Food iceCream = new ChocolateIceCream();
+        basket.addBasketItem(new BasketItem(iceCream, 3));
+
+        basket.removeFood(iceCream, 1);
+
+        List<BasketItem> actualBasketItemList = basket.getBasketItemList();
+        Integer totalFoodQuantity = basket.totalFoodQuantity();
+        assertEquals(1, actualBasketItemList.size());
+        assertEquals(2, totalFoodQuantity);
+        assertEquals(new Money("4.00", Currency.SGD), iceCream.getPrice());
+        assertEquals(new Money("8.00", Currency.SGD), basket.getTotalPrice());
     }
 }

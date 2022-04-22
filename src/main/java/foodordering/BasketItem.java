@@ -19,4 +19,12 @@ public class BasketItem {
     public Money getPrice() {
         return this.food.getPrice().multiply(new BigDecimal(this.quantity));
     }
+
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public Food getFood() {
+        return food;
+    }
 }
