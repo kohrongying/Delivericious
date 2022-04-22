@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class Basket {
 
-    private List<Food> foodList = new ArrayList<>();
+    private final List<Food> foodList = new ArrayList<>();
 
     public void addFood(Food food) {
         this.foodList.add(food);
@@ -18,10 +18,9 @@ public class Basket {
     }
 
     public BigDecimal getTotalPrice() {
-        BigDecimal totalPrice = foodList.stream()
-            .map(food -> food.getPrice())
+        return foodList.stream()
+            .map(Food::getPrice)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return totalPrice;
     }
 }
 
