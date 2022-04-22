@@ -3,23 +3,22 @@ package foodordering;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Basket {
 
-    private final List<Food> foodList = new ArrayList<>();
+    private final List<BasketItem> basketItemList = new ArrayList<>();
 
-    public void addFood(Food food) {
-        this.foodList.add(food);
+    public void addBasketItem(BasketItem basketItem) {
+        this.basketItemList.add(basketItem);
     }
 
-    public List<Food> getAllFood() {
-        return this.foodList;
+    public List<BasketItem> getBasketItemList() {
+        return this.basketItemList;
     }
 
     public BigDecimal getTotalPrice() {
-        return foodList.stream()
-            .map(Food::getPrice)
+        return basketItemList.stream()
+            .map(BasketItem::getPrice)
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

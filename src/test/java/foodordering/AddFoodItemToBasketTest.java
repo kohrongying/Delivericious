@@ -18,12 +18,13 @@ public class AddFoodItemToBasketTest {
         Food tomatoSoup = new TomatoSoup();
 
         // when
-        basket.addFood(tomatoSoup);
+        BasketItem basketItem = new BasketItem(tomatoSoup);
+        basket.addBasketItem(basketItem);
 
         // then
-        List<Food> actualItems = basket.getAllFood();
+        List<BasketItem> actualItems = basket.getBasketItemList();
         assertEquals(actualItems.size(), 1);
-        assertEquals(actualItems.get(0), tomatoSoup);
+        assertEquals(actualItems.get(0), basketItem);
     }
 
     @Test
@@ -33,12 +34,13 @@ public class AddFoodItemToBasketTest {
         Food seaFoodSalad = new SeaFoodSalad();
 
         // when
-        basket.addFood(seaFoodSalad);
+        BasketItem basketItem = new BasketItem(seaFoodSalad);
+        basket.addBasketItem(basketItem);
 
         // then
-        List<Food> actualItems = basket.getAllFood();
+        List<BasketItem> actualItems = basket.getBasketItemList();
         assertEquals(actualItems.size(), 1);
-        assertEquals(actualItems.get(0), seaFoodSalad);
+        assertEquals(actualItems.get(0), basketItem);
         assertEquals(seaFoodSalad.getPrice(), basket.getTotalPrice());
     }
 
@@ -49,16 +51,11 @@ public class AddFoodItemToBasketTest {
         Food iceCream = new ChocolateIceCream();
 
         // when
-        basket.addFood(iceCream);
-        basket.addFood(iceCream);
-        basket.addFood(iceCream);
+        basket.addBasketItem(new BasketItem(iceCream, 3));
 
         // then
-        List<Food> actualItems = basket.getAllFood();
-        assertEquals(actualItems.size(), 3);
-        assertEquals(actualItems.get(0), iceCream);
-        assertEquals(actualItems.get(1), iceCream);
-        assertEquals(actualItems.get(2), iceCream);
+        List<BasketItem> actualItems = basket.getBasketItemList();
+        assertEquals(actualItems.size(), 1);
         assertEquals(iceCream.getPrice(), new BigDecimal("4.00"));
         assertEquals(basket.getTotalPrice(), new BigDecimal("12.00"));
     }
