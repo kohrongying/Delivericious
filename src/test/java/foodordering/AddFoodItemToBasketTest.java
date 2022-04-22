@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AddFoodItemToBasketTest {
+class AddFoodItemToBasketTest {
     @Test
     void testAddTomatoSoupToBasket() {
         // given
@@ -21,9 +21,9 @@ public class AddFoodItemToBasketTest {
         basket.addFood(tomatoSoup);
 
         // then
-        List<Food> actualItems = basket.getAllFood();
-        assertEquals(actualItems.size(), 1);
-        assertEquals(actualItems.get(0), tomatoSoup);
+        List<BasketItem> actualItems = basket.getAllItems();
+        assertEquals(1, actualItems.size());
+        assertEquals(tomatoSoup, actualItems.get(0).getFood());
     }
 
     @Test
@@ -36,9 +36,9 @@ public class AddFoodItemToBasketTest {
         basket.addFood(seaFoodSalad);
 
         // then
-        List<Food> actualItems = basket.getAllFood();
-        assertEquals(actualItems.size(), 1);
-        assertEquals(actualItems.get(0), seaFoodSalad);
+        List<BasketItem> actualItems = basket.getAllItems();
+        assertEquals(1, actualItems.size());
+        assertEquals(seaFoodSalad, actualItems.get(0).getFood());
         assertEquals(seaFoodSalad.getPrice(), basket.getTotalPrice());
     }
 
@@ -49,17 +49,12 @@ public class AddFoodItemToBasketTest {
         Food iceCream = new ChocolateIceCream();
 
         // when
-        basket.addFood(iceCream);
-        basket.addFood(iceCream);
-        basket.addFood(iceCream);
+        basket.addFood(iceCream, 3);
 
         // then
-        List<Food> actualItems = basket.getAllFood();
-        assertEquals(actualItems.size(), 3);
-        assertEquals(actualItems.get(0), iceCream);
-        assertEquals(actualItems.get(1), iceCream);
-        assertEquals(actualItems.get(2), iceCream);
-        assertEquals(iceCream.getPrice(), new BigDecimal("4.00"));
-        assertEquals(basket.getTotalPrice(), new BigDecimal("12.00"));
+        List<BasketItem> actualItems = basket.getAllItems();
+        assertEquals(1, actualItems.size());
+        assertEquals(new BigDecimal("4.00"), iceCream.getPrice());
+        assertEquals(new BigDecimal("12.00"), basket.getTotalPrice());
     }
 }
