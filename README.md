@@ -31,4 +31,14 @@ Note: created named exception: BasketQuantityExceedException to support ubiquiti
    
 8. Basket save into hashmap of <id, hashmap>
 Orchestrator calls method to save basket as compared to a save method on Basket (the aggregate root)
+Orchestrator = Repository
+Interface to Repository helps to enforce contract
+
+9. Basket more than 5 soup, suggest coupon "DELIVERICIOUS_10" with 10% discount
+available coupons as input
+tomato soup  in SOUP category
+
+All available Coupons --> CouponRepository
+Coupon()   
+
 ##### Links: 
