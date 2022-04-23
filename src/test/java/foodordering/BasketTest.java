@@ -5,11 +5,9 @@ import foodordering.food.SeaFoodSalad;
 import foodordering.food.TomatoSoup;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BasketTest {
     @Test
@@ -102,4 +100,24 @@ public class BasketTest {
 
         assertEquals(new Money("24.00", Currency.SGD), basket.getTotalPrice());
     }
+
+    @Test
+    void testBasketThrowExceptionWhenAddBasketItemOfMoreThan100Quantity() {
+        Basket basket = new Basket();
+        Food iceCream = new ChocolateIceCream();
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> basket.addBasketItem(new BasketItem(iceCream, 101)));
+    }
+
+    @Test
+    void testBasketThrowExceptionWhenTotalQuantityOfFoodExceed100AfterAddBasketItem() {
+        Basket basket = new Basket();
+        Food iceCream = new ChocolateIceCream();
+        basket.addBasketItem(new BasketItem(iceCream, 90));
+
+        assertThrows(UnsupportedOperationException.class,
+                () -> basket.addBasketItem(new BasketItem(iceCream, 11)));
+    }
+
 }

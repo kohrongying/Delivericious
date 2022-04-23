@@ -16,6 +16,10 @@ public class Basket {
     private final List<BasketItem> basketItemList = new ArrayList<>();
 
     public void addBasketItem(BasketItem basketItem) {
+        int newQuantity = this.totalFoodQuantity() + basketItem.getQuantity();
+        if (newQuantity > 100) {
+            throw new UnsupportedOperationException("Cannot add more than 100 items to basket");
+        }
         this.basketItemList.add(basketItem);
     }
 

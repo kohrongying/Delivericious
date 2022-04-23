@@ -26,4 +26,6 @@ Basket Entity should have id to differentiate oldBasket and newBasket.
 6. Review total price for current basket
 Implement some BigDecimal methods on Money class
    
+7. Limit basket to 100 
+
 ##### Links: 
