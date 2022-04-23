@@ -3,7 +3,7 @@
 - This is a repository for the DDD training.
 
 #### Context
-- This is for Delivericious food delivery app
+- This is for Delivericious menuItem delivery app
 - We learnt about the domain already on Event Storming session and identified bounded contexts. 
 - This repository demonstrates usage of Tactical Pattern of DDD. 
 
@@ -18,7 +18,7 @@ A: Yes Money(amount, currency) as a value object
 3. Add **3** chocolate ice cream to Basket which cost **4$** each
 
 4. Remove one chocolate ice cream from basket
-Food should have a id to use for comparing food and the basket item.
+Food should have a id to use for comparing menuItem and the basket item.
    
 5. Allow user to duplicate basket for re-ordering. 
 Basket Entity should have id to differentiate oldBasket and newBasket.

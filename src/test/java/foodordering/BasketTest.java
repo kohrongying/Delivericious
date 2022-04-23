@@ -1,9 +1,5 @@
 package foodordering;
 
-import foodordering.food.ChocolateIceCream;
-import foodordering.food.SeaFoodSalad;
-import foodordering.food.TomatoSoup;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,9 +7,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BasketTest {
-    Food tomatoSoup = new TomatoSoup();
-    Food seaFoodSalad = new SeaFoodSalad();
-    Food iceCream = new ChocolateIceCream();
+    MenuItem tomatoSoup = new MenuItem("Tomato Soup", new Money("24.45", Currency.SGD));
+    MenuItem seaMenuItemSalad = new MenuItem("SeaFood Salad", new Money("12.00", Currency.SGD));
+    MenuItem iceCream = new MenuItem("Chocolate Ice Cream", new Money("4.00", Currency.SGD));
 
     @Test
     void testAddTomatoSoupToBasket() throws BasketQuantityExceedException {
@@ -36,14 +32,14 @@ public class BasketTest {
         Basket basket = new Basket();
 
         // when
-        BasketItem basketItem = new BasketItem(seaFoodSalad);
+        BasketItem basketItem = new BasketItem(seaMenuItemSalad);
         basket.addBasketItem(basketItem);
 
         // then
         List<BasketItem> actualItems = basket.getBasketItemList();
         assertEquals(actualItems.size(), 1);
         assertEquals(actualItems.get(0), basketItem);
-        assertEquals(new Money("12.00", Currency.SGD), basket.getTotalPrice());
+        assertEquals(new Money("12.00", Currency.SGD), basket.totalPrice());
     }
 
     @Test
@@ -56,11 +52,11 @@ public class BasketTest {
 
         // then
         List<BasketItem> actualItems = basket.getBasketItemList();
-        Integer totalFoodQuantity = basket.totalFoodQuantity();
+        Integer totalFoodQuantity = basket.totalQuantity();
         assertEquals(1, actualItems.size());
         assertEquals(3, totalFoodQuantity);
         assertEquals(new Money("4.00", Currency.SGD), iceCream.getPrice());
-        assertEquals(new Money("12.00", Currency.SGD), basket.getTotalPrice());
+        assertEquals(new Money("12.00", Currency.SGD), basket.totalPrice());
     }
 
     @Test
@@ -68,14 +64,14 @@ public class BasketTest {
         Basket basket = new Basket();
         basket.addBasketItem(new BasketItem(iceCream, 3));
 
-        basket.removeFood(iceCream, 1);
+        basket.remove(iceCream, 1);
 
         List<BasketItem> actualBasketItemList = basket.getBasketItemList();
-        Integer totalFoodQuantity = basket.totalFoodQuantity();
+        Integer totalFoodQuantity = basket.totalQuantity();
         assertEquals(1, actualBasketItemList.size());
         assertEquals(2, totalFoodQuantity);
         assertEquals(new Money("4.00", Currency.SGD), iceCream.getPrice());
-        assertEquals(new Money("8.00", Currency.SGD), basket.getTotalPrice());
+        assertEquals(new Money("8.00", Currency.SGD), basket.totalPrice());
     }
 
     @Test
@@ -86,7 +82,7 @@ public class BasketTest {
         Basket newBasket = basket.duplicate();
 
         assertNotEquals(basket.id(), newBasket.id());
-        assertEquals(new Money("12.00", Currency.SGD), newBasket.getTotalPrice());
+        assertEquals(new Money("12.00", Currency.SGD), newBasket.totalPrice());
     }
 
     @Test
@@ -94,9 +90,9 @@ public class BasketTest {
         Basket basket = new Basket();
 
         basket.addBasketItem(new BasketItem(iceCream, 3));
-        basket.addBasketItem(new BasketItem(seaFoodSalad));
+        basket.addBasketItem(new BasketItem(seaMenuItemSalad));
 
-        assertEquals(new Money("24.00", Currency.SGD), basket.getTotalPrice());
+        assertEquals(new Money("24.00", Currency.SGD), basket.totalPrice());
     }
 
     @Test

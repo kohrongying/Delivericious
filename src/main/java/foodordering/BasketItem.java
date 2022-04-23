@@ -3,32 +3,32 @@ package foodordering;
 import java.math.BigDecimal;
 
 public class BasketItem {
-    private Food food;
+    private MenuItem menuItem;
     private Integer quantity;
 
-    public BasketItem(Food food, Integer quantity) {
-        this.food = food;
+    public BasketItem(MenuItem menuItem, Integer quantity) {
+        this.menuItem = menuItem;
         this.quantity = quantity;
     }
 
-    public BasketItem(Food food) {
-        this.food = food;
+    public BasketItem(MenuItem menuItem) {
+        this.menuItem = menuItem;
         this.quantity = 1;
     }
 
-    public Money getPrice() {
-        return this.food.getPrice().multiply(new BigDecimal(this.quantity));
+    public Money price() {
+        return this.menuItem.getPrice().multiply(new BigDecimal(this.quantity));
     }
 
-    public Integer getQuantity() {
+    public Integer quantity() {
         return this.quantity;
     }
 
-    public Food getFood() {
-        return food;
+    public MenuItem menuItem() {
+        return this.menuItem;
     }
 
     public BasketItem clone() {
-        return new BasketItem(this.food, this.quantity);
+        return new BasketItem(this.menuItem, this.quantity);
     }
 }

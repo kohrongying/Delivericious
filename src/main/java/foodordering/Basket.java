@@ -12,7 +12,7 @@ public class Basket {
     private final List<BasketItem> basketItemList = new ArrayList<>();
 
     public void addBasketItem(BasketItem basketItem) throws BasketQuantityExceedException {
-        int newQuantity = this.totalFoodQuantity() + basketItem.getQuantity();
+        int newQuantity = this.totalQuantity() + basketItem.quantity();
         if (newQuantity > BASKET_LIMIT) {
             throw new BasketQuantityExceedException();
         }
@@ -27,32 +27,32 @@ public class Basket {
         return this.id;
     }
 
-    public Money getTotalPrice() {
+    public Money totalPrice() {
         return this.basketItemList.stream()
-            .map(BasketItem::getPrice)
+            .map(BasketItem::price)
             .reduce(Money.ZERO, Money::add);
     }
 
-    public Integer totalFoodQuantity() {
+    public Integer totalQuantity() {
         return this.basketItemList.stream()
-                .map(BasketItem::getQuantity)
+                .map(BasketItem::quantity)
                 .reduce(0, Integer::sum);
     }
 
-    public void removeFood(Food food, int quantityToDecrease) throws BasketQuantityExceedException {
+    public void remove(MenuItem menuItem, int quantityToDecrease) throws BasketQuantityExceedException {
         Optional<BasketItem> result = this.basketItemList.stream()
-                .filter(basketItem -> basketItem.getFood().equals(food))
+                .filter(basketItem -> basketItem.menuItem().equals(menuItem))
                 .findFirst();
 
         if (result.isEmpty()) return;
 
         BasketItem foundBasketItem = result.get();
-        Integer currentFoundBasketItemQuantity = foundBasketItem.getQuantity();
+        Integer currentFoundBasketItemQuantity = foundBasketItem.quantity();
         int newBasketItemQuantity = currentFoundBasketItemQuantity - quantityToDecrease;
         this.removeBasketItem(foundBasketItem);
 
         if (newBasketItemQuantity == 0) return;
-        this.addBasketItem(new BasketItem(foundBasketItem.getFood(), newBasketItemQuantity));
+        this.addBasketItem(new BasketItem(foundBasketItem.menuItem(), newBasketItemQuantity));
     }
 
     private void removeBasketItem(BasketItem basketItem) {

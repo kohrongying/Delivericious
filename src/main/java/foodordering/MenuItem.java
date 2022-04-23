@@ -3,13 +3,12 @@ package foodordering;
 import java.util.Objects;
 import java.util.UUID;
 
-public abstract class Food {
-    private UUID id;
-    String name;
-    Money price;
+public class MenuItem {
+    private UUID id = UUID.randomUUID();
+    private String name;
+    private Money price;
 
-    public Food(String name, Money price) {
-        this.id = UUID.randomUUID();
+    public MenuItem(String name, Money price) {
         this.name = name;
         this.price = price;
     }
@@ -21,7 +20,7 @@ public abstract class Food {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Food that = (Food) o;
+        MenuItem that = (MenuItem) o;
         return Objects.equals(id, that.id);
     }
 }
