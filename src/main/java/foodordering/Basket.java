@@ -1,9 +1,6 @@
 package foodordering;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class Basket {
     public static final int BASKET_LIMIT = 100;

@@ -7,9 +7,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BasketTest {
-    MenuItem tomatoSoup = new MenuItem("Tomato Soup", new Money("24.45", Currency.SGD));
-    MenuItem seaMenuItemSalad = new MenuItem("SeaFood Salad", new Money("12.00", Currency.SGD));
-    MenuItem iceCream = new MenuItem("Chocolate Ice Cream", new Money("4.00", Currency.SGD));
+    public static final MenuItem tomatoSoup = new MenuItem("Tomato Soup", new Money("24.45", Currency.SGD));
+    public static final MenuItem seaMenuItemSalad = new MenuItem("SeaFood Salad", new Money("12.00", Currency.SGD));
+    public static final MenuItem iceCream = new MenuItem("Chocolate Ice Cream", new Money("4.00", Currency.SGD));
 
     @Test
     void testAddTomatoSoupToBasket() throws BasketQuantityExceedException {
@@ -110,5 +110,4 @@ public class BasketTest {
         assertThrows(BasketQuantityExceedException.class,
                 () -> basket.addBasketItem(new BasketItem(iceCream, 11)));
     }
-
 }

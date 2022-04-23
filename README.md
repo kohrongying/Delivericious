@@ -28,4 +28,7 @@ Implement some BigDecimal methods on Money class
    
 7. Limit basket to 100 
 Note: created named exception: BasketQuantityExceedException to support ubiquitious language
+   
+8. Basket save into hashmap of <id, hashmap>
+Orchestrator calls method to save basket as compared to a save method on Basket (the aggregate root)
 ##### Links: 
