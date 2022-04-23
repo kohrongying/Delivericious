@@ -1,6 +1,7 @@
 package foodordering;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Basket {
     public static final int BASKET_LIMIT = 100;
@@ -63,6 +64,13 @@ public class Basket {
             newBasket.addBasketItem(basketItem.clone());
         }
         return newBasket;
+    }
+
+    public List<BasketItem> getBasketItemByCategory(FoodCategory foodCategory) {
+        return this.basketItemList.stream()
+                .filter(basketItem -> basketItem.belongsToFoodCategory(foodCategory))
+                .collect(Collectors.toList());
+
     }
 }
 

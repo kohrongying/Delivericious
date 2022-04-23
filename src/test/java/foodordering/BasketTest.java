@@ -7,8 +7,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BasketTest {
-    public static final MenuItem tomatoSoup = new MenuItem("Tomato Soup", new Money("24.45", Currency.SGD));
-    public static final MenuItem seaMenuItemSalad = new MenuItem("SeaFood Salad", new Money("12.00", Currency.SGD));
+    public static final MenuItem tomatoSoup = new MenuItem("Tomato Soup", new Money("24.45", Currency.SGD), FoodCategory.SOUP);
+    public static final MenuItem seafoodSalad = new MenuItem("SeaFood Salad", new Money("12.00", Currency.SGD));
     public static final MenuItem iceCream = new MenuItem("Chocolate Ice Cream", new Money("4.00", Currency.SGD));
 
     @Test
@@ -32,7 +32,7 @@ public class BasketTest {
         Basket basket = new Basket();
 
         // when
-        BasketItem basketItem = new BasketItem(seaMenuItemSalad);
+        BasketItem basketItem = new BasketItem(seafoodSalad);
         basket.addBasketItem(basketItem);
 
         // then
@@ -90,7 +90,7 @@ public class BasketTest {
         Basket basket = new Basket();
 
         basket.addBasketItem(new BasketItem(iceCream, 3));
-        basket.addBasketItem(new BasketItem(seaMenuItemSalad));
+        basket.addBasketItem(new BasketItem(seafoodSalad));
 
         assertEquals(new Money("24.00", Currency.SGD), basket.totalPrice());
     }
@@ -109,5 +109,22 @@ public class BasketTest {
 
         assertThrows(BasketQuantityExceedException.class,
                 () -> basket.addBasketItem(new BasketItem(iceCream, 11)));
+    }
+
+    @Test
+    void testGetBasketItemByCategory() throws BasketQuantityExceedException {
+        Basket basket = new Basket();
+        MenuItem seafoodSoup = new MenuItem("Seafood Soup", new Money("24.45", Currency.SGD), FoodCategory.SOUP);
+        BasketItem tomatoBasketItem = new BasketItem(tomatoSoup, 3);
+        BasketItem seafoodBasketItem = new BasketItem(seafoodSoup, 3);
+        basket.addBasketItem(tomatoBasketItem);
+        basket.addBasketItem(seafoodBasketItem);
+        basket.addBasketItem(new BasketItem(seafoodSalad));
+
+        List<BasketItem> soupBasketItems = basket.getBasketItemByCategory(FoodCategory.SOUP);
+
+        assertEquals(soupBasketItems.size(), 2);
+        assertTrue(soupBasketItems.contains(tomatoBasketItem));
+        assertTrue(soupBasketItems.contains(seafoodBasketItem));
     }
 }

@@ -31,4 +31,8 @@ public class BasketItem {
     public BasketItem clone() {
         return new BasketItem(this.menuItem, this.quantity);
     }
+
+    public boolean belongsToFoodCategory(FoodCategory foodCategory) {
+        return this.menuItem.foodCategory().equals(foodCategory);
+    }
 }
