@@ -3,6 +3,7 @@ package foodordering;
 import foodordering.food.ChocolateIceCream;
 import foodordering.food.SeaFoodSalad;
 import foodordering.food.TomatoSoup;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -10,11 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BasketTest {
+    Food tomatoSoup = new TomatoSoup();
+    Food seaFoodSalad = new SeaFoodSalad();
+    Food iceCream = new ChocolateIceCream();
+
     @Test
-    void testAddTomatoSoupToBasket() {
+    void testAddTomatoSoupToBasket() throws BasketQuantityExceedException {
         // given
         Basket basket = new Basket();
-        Food tomatoSoup = new TomatoSoup();
 
         // when
         BasketItem basketItem = new BasketItem(tomatoSoup);
@@ -27,10 +31,9 @@ public class BasketTest {
     }
 
     @Test
-    void testAddSeaFoodSaladToBasket() {
+    void testAddSeaFoodSaladToBasket() throws BasketQuantityExceedException {
         // given
         Basket basket = new Basket();
-        Food seaFoodSalad = new SeaFoodSalad();
 
         // when
         BasketItem basketItem = new BasketItem(seaFoodSalad);
@@ -44,10 +47,9 @@ public class BasketTest {
     }
 
     @Test
-    void testAdd3ChocolateIceCreamToBasket() {
+    void testAdd3ChocolateIceCreamToBasket() throws BasketQuantityExceedException {
         // given
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
 
         // when
         basket.addBasketItem(new BasketItem(iceCream, 3));
@@ -62,9 +64,8 @@ public class BasketTest {
     }
 
     @Test
-    void testRemoveChocolateIceCreamAfterAdd3ToBasket() {
+    void testRemoveChocolateIceCreamAfterAdd3ToBasket() throws BasketQuantityExceedException {
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
         basket.addBasketItem(new BasketItem(iceCream, 3));
 
         basket.removeFood(iceCream, 1);
@@ -78,22 +79,19 @@ public class BasketTest {
     }
 
     @Test
-    void testBasketDuplicateForReOrdering() {
+    void testBasketDuplicateForReOrdering() throws BasketQuantityExceedException {
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
         basket.addBasketItem(new BasketItem(iceCream, 3));
 
         Basket newBasket = basket.duplicate();
 
-        assertNotEquals(basket.id, newBasket.id);
+        assertNotEquals(basket.id(), newBasket.id());
         assertEquals(new Money("12.00", Currency.SGD), newBasket.getTotalPrice());
     }
 
     @Test
-    void testBasketGetTotalPrice() {
+    void testBasketGetTotalPrice() throws BasketQuantityExceedException {
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
-        SeaFoodSalad seaFoodSalad = new SeaFoodSalad();
 
         basket.addBasketItem(new BasketItem(iceCream, 3));
         basket.addBasketItem(new BasketItem(seaFoodSalad));
@@ -104,19 +102,16 @@ public class BasketTest {
     @Test
     void testBasketThrowExceptionWhenAddBasketItemOfMoreThan100Quantity() {
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
-
-        assertThrows(UnsupportedOperationException.class,
+        assertThrows(BasketQuantityExceedException.class,
                 () -> basket.addBasketItem(new BasketItem(iceCream, 101)));
     }
 
     @Test
-    void testBasketThrowExceptionWhenTotalQuantityOfFoodExceed100AfterAddBasketItem() {
+    void testBasketThrowExceptionWhenTotalQuantityOfFoodExceed100AfterAddBasketItem() throws BasketQuantityExceedException {
         Basket basket = new Basket();
-        Food iceCream = new ChocolateIceCream();
         basket.addBasketItem(new BasketItem(iceCream, 90));
 
-        assertThrows(UnsupportedOperationException.class,
+        assertThrows(BasketQuantityExceedException.class,
                 () -> basket.addBasketItem(new BasketItem(iceCream, 11)));
     }
 

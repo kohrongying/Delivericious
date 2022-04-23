@@ -27,5 +27,5 @@ Basket Entity should have id to differentiate oldBasket and newBasket.
 Implement some BigDecimal methods on Money class
    
 7. Limit basket to 100 
-
+Note: created named exception: BasketQuantityExceedException to support ubiquitious language
 ##### Links: 

@@ -1,30 +1,30 @@
 package foodordering;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class Basket {
-    public final UUID id;
-
-    public Basket() {
-        this.id = UUID.randomUUID();
-    }
+    public static final int BASKET_LIMIT = 100;
+    private final UUID id = UUID.randomUUID();
 
     private final List<BasketItem> basketItemList = new ArrayList<>();
 
-    public void addBasketItem(BasketItem basketItem) {
+    public void addBasketItem(BasketItem basketItem) throws BasketQuantityExceedException {
         int newQuantity = this.totalFoodQuantity() + basketItem.getQuantity();
-        if (newQuantity > 100) {
-            throw new UnsupportedOperationException("Cannot add more than 100 items to basket");
+        if (newQuantity > BASKET_LIMIT) {
+            throw new BasketQuantityExceedException();
         }
         this.basketItemList.add(basketItem);
     }
 
     public List<BasketItem> getBasketItemList() {
         return this.basketItemList;
+    }
+
+    public UUID id() {
+        return this.id;
     }
 
     public Money getTotalPrice() {
@@ -39,16 +39,16 @@ public class Basket {
                 .reduce(0, Integer::sum);
     }
 
-    public void removeFood(Food food, int quantityToDecrease) {
-        List<BasketItem> result = this.basketItemList.stream()
+    public void removeFood(Food food, int quantityToDecrease) throws BasketQuantityExceedException {
+        Optional<BasketItem> result = this.basketItemList.stream()
                 .filter(basketItem -> basketItem.getFood().equals(food))
-                .collect(Collectors.toList());
+                .findFirst();
 
-        if (result.size() == 0) return;
+        if (result.isEmpty()) return;
 
-        BasketItem foundBasketItem = result.get(0);
+        BasketItem foundBasketItem = result.get();
         Integer currentFoundBasketItemQuantity = foundBasketItem.getQuantity();
-        Integer newBasketItemQuantity = currentFoundBasketItemQuantity - quantityToDecrease;
+        int newBasketItemQuantity = currentFoundBasketItemQuantity - quantityToDecrease;
         this.removeBasketItem(foundBasketItem);
 
         if (newBasketItemQuantity == 0) return;
@@ -59,7 +59,7 @@ public class Basket {
         this.basketItemList.remove(basketItem);
     }
 
-    public Basket duplicate() {
+    public Basket duplicate() throws BasketQuantityExceedException {
         Basket newBasket = new Basket();
         for (int i = 0; i < this.basketItemList.size(); i++) {
             BasketItem basketItem = this.basketItemList.get(i);
